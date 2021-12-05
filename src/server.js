@@ -3,7 +3,8 @@ const app = require('./app');
 
 app.listen(PORT, (err) => {
   if (err) {
-    console.log(err);
+    process.stdin.write(`ERR: ${err.message}`);
+    return
   }
-  console.log(`App is running on http://localhost:${PORT}`);
+  process.stdin.write(`App is running on http://localhost:${PORT}`);
 });

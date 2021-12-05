@@ -21,9 +21,7 @@ const getById = async (id) => {
   return board;
 };
 
-const create = async (data) => {
-  return boardsRepository.create(data);
-};
+const create = async (data) => boardsRepository.create(data);
 
 const updateById = async (id, data) => {
   if (!validate(id)) {
