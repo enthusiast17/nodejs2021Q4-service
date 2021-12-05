@@ -114,14 +114,8 @@ const deleteById = async (boardId, taskId) => {
       `The ${taskId} (taskId) is not uuid.`
     );
   }
-  if (!(await tasksRepository.getById(boardId, taskId))) {
-    throw new HttpError(
-      ...NOT_FOUND_ARGS,
-      `The task with "${taskId}" (taskId) is not found.`
-    );
-  }
 
-  await tasksRepository.deleteById(boardId, taskId);
+  return tasksRepository.deleteById(boardId, taskId);
 };
 
 module.exports = {
