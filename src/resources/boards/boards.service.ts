@@ -1,12 +1,13 @@
-const { validate } = require('uuid');
-const { NOT_FOUND_ARGS, BAD_REQUEST_ARGS } = require('../../common/constants');
-const { HttpError } = require('../../common/error');
-const boardsRepository = require('./boards.memory.repository');
-const tasksRepository = require('../tasks/tasks.memory.repository');
+import { validate } from 'uuid';
+import { NOT_FOUND_ARGS, BAD_REQUEST_ARGS } from '../../common/constants';
+import { HttpError } from '../../common/error';
+import { IBoardParams } from './boards.model';
+import boardsRepository from './boards.memory.repository';
+import tasksRepository from '../tasks/tasks.memory.repository';
 
 const getAll = async () => boardsRepository.getAll();
 
-const getById = async (id) => {
+const getById = async (id: string) => {
   if (!validate(id)) {
     throw new HttpError(...BAD_REQUEST_ARGS, `The ${id} (id) is not uuid.`);
   }
@@ -21,9 +22,9 @@ const getById = async (id) => {
   return board;
 };
 
-const create = async (data) => boardsRepository.create(data);
+const create = async (data: IBoardParams) => boardsRepository.create(data);
 
-const updateById = async (id, data) => {
+const updateById = async (id: string, data: IBoardParams) => {
   if (!validate(id)) {
     throw new HttpError(...BAD_REQUEST_ARGS, `The ${id} (id) is not uuid.`);
   }
@@ -38,7 +39,7 @@ const updateById = async (id, data) => {
   return boardsRepository.updateById(id, data);
 };
 
-const deleteById = async (id) => {
+const deleteById = async (id: string) => {
   if (!validate(id)) {
     throw new HttpError(...BAD_REQUEST_ARGS, `The ${id} (id) is not uuid.`);
   }
@@ -54,7 +55,7 @@ const deleteById = async (id) => {
   await tasksRepository.whenBoardDeleted(id);
 };
 
-module.exports = {
+export default {
   getAll,
   getById,
   create,
