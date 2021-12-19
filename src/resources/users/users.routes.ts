@@ -9,13 +9,20 @@ export type IUserFastifyRequest = FastifyRequest<{
   Params: { userId: string };
 }>;
 
+/**
+ * Returns `FastifyPluginCallback` to register new routes
+ * @param fastify `IFastifyInstance` to create new route
+ * @param opts options from server for common routes
+ * @param done function, tells that routes creation are finished
+ * @return `FastifyPluginCallback` to register new routes
+ */
 const usersRoutes: FastifyPluginCallback = (
   fastify: IFastifyInstance,
   opts: Record<never, never>,
   done: IDone
 ) => {
   fastify.get('/users', opts, async (_, reply) => {
-    const users = await usersService.getAll();
+    const users: User[] = await usersService.getAll();
     reply.code(200).type('application/json').send(users.map(User.toResponse));
   });
 
@@ -23,7 +30,7 @@ const usersRoutes: FastifyPluginCallback = (
     '/users/:userId',
     opts,
     async (request: IUserFastifyRequest, reply) => {
-      const user = await usersService.getById(request.params.userId);
+      const user: User = await usersService.getById(request.params.userId);
       reply.code(200).type('application/json').send(User.toResponse(user));
     }
   );
@@ -32,7 +39,7 @@ const usersRoutes: FastifyPluginCallback = (
     '/users',
     { ...opts, schema: usersSchema },
     async (request: IUserFastifyRequest, reply) => {
-      const createdUser = await usersService.create(request.body);
+      const createdUser: User = await usersService.create(request.body);
       reply
         .code(201)
         .type('application/json')
@@ -44,7 +51,7 @@ const usersRoutes: FastifyPluginCallback = (
     '/users/:userId',
     { ...opts, schema: usersSchema },
     async (request: IUserFastifyRequest, reply) => {
-      const user = await usersService.updateById(
+      const user: User = await usersService.updateById(
         request.params.userId,
         request.body
       );

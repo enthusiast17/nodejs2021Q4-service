@@ -23,7 +23,12 @@ class User {
     this.password = password;
   }
 
-  static toResponse(user: User) {
+  /**
+   * Returns `User` without password
+   * @param user `User` to make `User` without password
+   * @return Promise `User` without password
+   */
+  static toResponse(user: User): Omit<User, 'password'> {
     const { id, name, login } = user;
     return { id, name, login };
   }
