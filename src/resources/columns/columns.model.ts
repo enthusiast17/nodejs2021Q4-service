@@ -19,7 +19,12 @@ class Column {
     this.order = order;
   }
 
-  static toResponse(column: Column) {
+  /**
+   * Returns `Column` without id object
+   * @param user `Column` to make `Column` without id
+   * @return `Column` without id object
+   */
+  static toResponse(column: Column): Omit<Column, 'id'> {
     const { title, order } = column;
     return { title, order };
   }
