@@ -30,4 +30,4 @@ const tasksSchema = {
   },
 };
 
-module.exports = tasksSchema;
+export default tasksSchema;

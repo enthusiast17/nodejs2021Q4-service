@@ -1,10 +1,11 @@
-const { validate } = require('uuid');
-const { NOT_FOUND_ARGS, BAD_REQUEST_ARGS } = require('../../common/constants');
-const { HttpError } = require('../../common/error');
-const tasksRepository = require('./tasks.memory.repository');
-const boardsRepository = require('../boards/boards.memory.repository');
+import { validate } from 'uuid';
+import { NOT_FOUND_ARGS, BAD_REQUEST_ARGS } from '../../common/constants';
+import { HttpError } from '../../common/error';
+import tasksRepository from './tasks.memory.repository';
+import boardsRepository from '../boards/boards.memory.repository';
+import { ITaskParams } from './tasks.model';
 
-const getAll = async (boardId) => {
+const getAll = async (boardId: string) => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -20,7 +21,7 @@ const getAll = async (boardId) => {
   return tasksRepository.getAll(boardId);
 };
 
-const getById = async (boardId, taskId) => {
+const getById = async (boardId: string, taskId: string) => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -50,7 +51,7 @@ const getById = async (boardId, taskId) => {
   return task;
 };
 
-const create = async (boardId, data) => {
+const create = async (boardId: string, data: ITaskParams) => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -66,7 +67,11 @@ const create = async (boardId, data) => {
   return tasksRepository.create(boardId, data);
 };
 
-const updateById = async (boardId, taskId, data) => {
+const updateById = async (
+  boardId: string,
+  taskId: string,
+  data: ITaskParams
+) => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -95,7 +100,7 @@ const updateById = async (boardId, taskId, data) => {
   return tasksRepository.updateById(boardId, taskId, data);
 };
 
-const deleteById = async (boardId, taskId) => {
+const deleteById = async (boardId: string, taskId: string) => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -118,7 +123,7 @@ const deleteById = async (boardId, taskId) => {
   return tasksRepository.deleteById(boardId, taskId);
 };
 
-module.exports = {
+export default {
   getAll,
   getById,
   create,
