@@ -20,7 +20,14 @@ class Board {
     this.columns = columns.map((column: IColumnParams) => new Column(column));
   }
 
-  static toResponse(board: Board) {
+  /**
+   * Returns `Board` without `Column`'s ID
+   * @param user `Board` to make `Board` without `Columns`'s ID
+   * @return `Board` without `Column`'s ID
+   */
+  static toResponse(
+    board: Board
+  ): Omit<Board, 'columns'> & { columns: Omit<Column, 'id'>[] } {
     return { ...board, columns: board.columns.map(Column.toResponse) };
   }
 }
