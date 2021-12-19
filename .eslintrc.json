@@ -19,6 +19,11 @@
   },
   "settings": {
     "noInlineConfig": true,
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts"]
+      }
+    },
     "node": {
       "tryExtensions": [".ts"]
     }
