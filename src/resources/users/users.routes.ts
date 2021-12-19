@@ -1,4 +1,4 @@
-import { FastifyPluginCallback, FastifyRequest } from 'fastify';
+import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify';
 import { IDone, IFastifyInstance } from '../../common/types';
 import { IUserParams, User } from './users.model';
 import usersSchema from './users.schema';
@@ -21,7 +21,7 @@ const usersRoutes: FastifyPluginCallback = (
   opts: Record<never, never>,
   done: IDone
 ) => {
-  fastify.get('/users', opts, async (_, reply) => {
+  fastify.get('/users', opts, async (_, reply: FastifyReply) => {
     const users: User[] = await usersService.getAll();
     reply.code(200).type('application/json').send(users.map(User.toResponse));
   });
@@ -29,7 +29,7 @@ const usersRoutes: FastifyPluginCallback = (
   fastify.get(
     '/users/:userId',
     opts,
-    async (request: IUserFastifyRequest, reply) => {
+    async (request: IUserFastifyRequest, reply: FastifyReply) => {
       const user: User = await usersService.getById(request.params.userId);
       reply.code(200).type('application/json').send(User.toResponse(user));
     }
@@ -38,7 +38,7 @@ const usersRoutes: FastifyPluginCallback = (
   fastify.post(
     '/users',
     { ...opts, schema: usersSchema },
-    async (request: IUserFastifyRequest, reply) => {
+    async (request: IUserFastifyRequest, reply: FastifyReply) => {
       const createdUser: User = await usersService.create(request.body);
       reply
         .code(201)
@@ -50,7 +50,7 @@ const usersRoutes: FastifyPluginCallback = (
   fastify.put(
     '/users/:userId',
     { ...opts, schema: usersSchema },
-    async (request: IUserFastifyRequest, reply) => {
+    async (request: IUserFastifyRequest, reply: FastifyReply) => {
       const user: User = await usersService.updateById(
         request.params.userId,
         request.body
@@ -62,7 +62,7 @@ const usersRoutes: FastifyPluginCallback = (
   fastify.delete(
     '/users/:userId',
     opts,
-    async (request: IUserFastifyRequest, reply) => {
+    async (request: IUserFastifyRequest, reply: FastifyReply) => {
       await usersService.deleteById(request.params.userId);
       reply.code(204);
     }
