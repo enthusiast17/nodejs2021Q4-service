@@ -14,4 +14,4 @@ const columnsSchema = {
   },
 };
 
-module.exports = columnsSchema;
+export default columnsSchema;
