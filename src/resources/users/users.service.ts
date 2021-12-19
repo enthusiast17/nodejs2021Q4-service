@@ -1,16 +1,17 @@
-const { validate } = require('uuid');
-const {
+import { validate } from 'uuid';
+import { IUserParams } from './users.model';
+import {
   NOT_FOUND_ARGS,
   BAD_REQUEST_ARGS,
   CONFLICT_ARGS,
-} = require('../../common/constants');
-const { HttpError } = require('../../common/error');
-const usersRepository = require('./users.memory.repository');
-const tasksRepository = require('../tasks/tasks.memory.repository');
+} from '../../common/constants';
+import { HttpError } from '../../common/error';
+import usersRepository from './users.memory.repository';
+import tasksRepository from '../tasks/tasks.memory.repository';
 
 const getAll = async () => usersRepository.getAll();
 
-const getById = async (id) => {
+const getById = async (id: string) => {
   if (!validate(id)) {
     throw new HttpError(...BAD_REQUEST_ARGS, `The ${id} (id) is not uuid.`);
   }
@@ -25,7 +26,7 @@ const getById = async (id) => {
   return user;
 };
 
-const create = async (data) => {
+const create = async (data: IUserParams) => {
   if (await usersRepository.getByLogin(data.login)) {
     throw new HttpError(
       ...CONFLICT_ARGS,
@@ -36,7 +37,7 @@ const create = async (data) => {
   return usersRepository.create(data);
 };
 
-const updateById = async (id, data) => {
+const updateById = async (id: string, data: IUserParams) => {
   if (!validate(id)) {
     throw new HttpError(...BAD_REQUEST_ARGS, `The ${id} (id) is not uuid.`);
   }
@@ -51,7 +52,7 @@ const updateById = async (id, data) => {
   return usersRepository.updateById(id, data);
 };
 
-const deleteById = async (id) => {
+const deleteById = async (id: string) => {
   if (!validate(id)) {
     throw new HttpError(...BAD_REQUEST_ARGS, `The ${id} (id) is not uuid.`);
   }
@@ -67,7 +68,7 @@ const deleteById = async (id) => {
   await tasksRepository.whenUserDeleted(id);
 };
 
-module.exports = {
+export default {
   getAll,
   getById,
   create,
