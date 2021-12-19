@@ -3,9 +3,13 @@ import { NOT_FOUND_ARGS, BAD_REQUEST_ARGS } from '../../common/constants';
 import { HttpError } from '../../common/error';
 import tasksRepository from './tasks.memory.repository';
 import boardsRepository from '../boards/boards.memory.repository';
-import { ITaskParams } from './tasks.model';
+import { ITaskParams, Task } from './tasks.model';
 
-const getAll = async (boardId: string) => {
+/**
+ * Returns all existing `Task` from task repository
+ * @returns Promise array of `Task` object
+ */
+const getAll = async (boardId: string): Promise<Task[]> => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -21,7 +25,13 @@ const getAll = async (boardId: string) => {
   return tasksRepository.getAll(boardId);
 };
 
-const getById = async (boardId: string, taskId: string) => {
+/**
+ * Returns found `Task` or null from task repository
+ * @param boardId `Board`'s ID to find task with board id
+ * @param taskId `Task`'s ID to find task
+ * @returns Promise `Task` object or null
+ */
+const getById = async (boardId: string, taskId: string): Promise<Task> => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -40,7 +50,7 @@ const getById = async (boardId: string, taskId: string) => {
       `The ${taskId} (taskId) is not uuid.`
     );
   }
-  const task = await tasksRepository.getById(boardId, taskId);
+  const task: Task | null = await tasksRepository.getById(boardId, taskId);
   if (!task) {
     throw new HttpError(
       ...NOT_FOUND_ARGS,
@@ -51,7 +61,13 @@ const getById = async (boardId: string, taskId: string) => {
   return task;
 };
 
-const create = async (boardId: string, data: ITaskParams) => {
+/**
+ * Returns created `Task` from task repository
+ * @param boardId `Board`'s ID to find task with board id
+ * @param data `Task`'s params `ITaskParams` to save task
+ * @returns Promise `Task` object
+ */
+const create = async (boardId: string, data: ITaskParams): Promise<Task> => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -67,11 +83,18 @@ const create = async (boardId: string, data: ITaskParams) => {
   return tasksRepository.create(boardId, data);
 };
 
+/**
+ * Returns updated `Task` from task repository
+ * @param boardId `Board`'s ID to find task with board id
+ * @param taskId `Task`'s ID to find task
+ * @param data `Task`'s params `ITaskParams` to save task
+ * @returns Promise `Task` object
+ */
 const updateById = async (
   boardId: string,
   taskId: string,
   data: ITaskParams
-) => {
+): Promise<Task> => {
   if (!validate(boardId)) {
     throw new HttpError(
       ...BAD_REQUEST_ARGS,
@@ -100,6 +123,12 @@ const updateById = async (
   return tasksRepository.updateById(boardId, taskId, data);
 };
 
+/**
+ * Returns void and deletes task from database
+ * @param boardId `Board`'s ID to find task with board id
+ * @param taskId `Task`'s ID to find task
+ * @return Promise void
+ */
 const deleteById = async (boardId: string, taskId: string) => {
   if (!validate(boardId)) {
     throw new HttpError(

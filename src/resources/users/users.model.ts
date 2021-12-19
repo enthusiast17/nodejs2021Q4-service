@@ -24,9 +24,9 @@ class User {
   }
 
   /**
-   * Returns `User` without password
+   * Returns `User` without password object
    * @param user `User` to make `User` without password
-   * @return Promise `User` without password
+   * @return `User` without password object
    */
   static toResponse(user: User): Omit<User, 'password'> {
     const { id, name, login } = user;
