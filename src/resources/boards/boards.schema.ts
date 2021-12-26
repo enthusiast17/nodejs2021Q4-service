@@ -1,4 +1,4 @@
-const columnsSchema = require('../columns/columns.schema');
+import columnsSchema from '../columns/columns.schema';
 
 const boardsSchema = {
   type: 'object',
@@ -17,4 +17,4 @@ const boardsSchema = {
   },
 };
 
-module.exports = boardsSchema;
+export default boardsSchema;

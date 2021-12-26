@@ -20,4 +20,4 @@ const usersSchema = {
   },
 };
 
-module.exports = usersSchema;
+export default usersSchema;
