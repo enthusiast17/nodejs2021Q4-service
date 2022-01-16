@@ -5,7 +5,9 @@ import { logger } from './common/logger';
 const { PORT } = config;
 
 app.listen(PORT || 4000, () => {
-  process.stdin.write(`App is running on http://localhost:${PORT}`);
+  const message = `App is running on http://localhost:${PORT}`;
+  logger.log('info', message);
+  process.stdin.write(message);
   process.stdin.end();
 });
 
