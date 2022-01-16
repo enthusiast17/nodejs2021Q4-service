@@ -21,11 +21,11 @@
     "noInlineConfig": true,
     "import/resolver": {
       "node": {
-        "extensions": [".ts"]
+        "extensions": [".ts", ".d.ts", ".js"]
       }
     },
     "node": {
-      "tryExtensions": [".ts"]
+      "tryExtensions": [".ts", ".d.ts", ".js"]
     }
   },
   "extends": [
@@ -42,6 +42,7 @@
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
     "no-unused-vars": "off",
+    "consistent-return": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error"
   }

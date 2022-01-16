@@ -4,18 +4,15 @@ import { logger } from './common/logger';
 
 const { PORT } = config;
 
-app.listen(PORT || 4000, (err: Error | null) => {
-  if (err) {
-    process.stdin.write(`ERR: ${err.message}`);
-    return;
-  }
+app.listen(PORT || 4000, () => {
   process.stdin.write(`App is running on http://localhost:${PORT}`);
+  process.stdin.end();
 });
 
-process.on('unhandledRejection', (reason) => {
-  logger.error(reason);
+process.on('unhandledRejection', (err: Error) => {
+  logger.log('error', { statusCode: 500, ...err });
 });
 
-process.on('uncaughtException', (err) => {
-  logger.error(err);
+process.on('uncaughtException', (err: Error) => {
+  logger.log('error', { statusCode: 500, ...err });
 });
