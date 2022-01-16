@@ -1,0 +1,75 @@
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{"login":"test_user","name":"TEST_USER","password":"T35t_P@55w0rd"},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"login":"test_user","name":"TEST_USER","password":"T35t_P@55w0rd"},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"login":"test_user","name":"TEST_USER","password":"T35t_P@55w0rd"},"level":"info","method":"POST","query":{}}
+{"body":{"id":"4b7d58b2-621d-4e9f-8921-148411391f50","login":"test_user","name":"Autotest updated TEST_USER","password":"T35t_P@55w0rd"},"level":"info","method":"PUT","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"login":"test_user","name":"TEST_USER","password":"T35t_P@55w0rd"},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"login":"test_user","name":"TEST_USER","password":"T35t_P@55w0rd"},"level":"info","method":"POST","query":{}}
+{"body":{"columns":[{"order":1,"title":"Backlog"},{"order":2,"title":"Sprint"}],"title":"Autotest board"},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":"5092db16-9479-470d-9290-83db95fe9257","description":"Lorem ipsum","order":1,"title":"Task #1","userId":"db0bf7fa-5fc3-4ce5-ae0a-fd36628214ba"},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":"5092db16-9479-470d-9290-83db95fe9257","description":"Lorem ipsum","order":2,"title":"Task #2","userId":"db0bf7fa-5fc3-4ce5-ae0a-fd36628214ba"},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"columns":[{"order":1,"title":"Backlog"},{"order":2,"title":"Sprint"}],"title":"Autotest board"},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{"columns":[{"order":1,"title":"Backlog"},{"order":2,"title":"Sprint"}],"title":"Autotest board"},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"columns":[{"order":1,"title":"Backlog"},{"order":2,"title":"Sprint"}],"title":"Autotest board"},"level":"info","method":"POST","query":{}}
+{"body":{"columns":[{"order":1,"title":"Backlog"},{"order":2,"title":"Sprint"}],"id":"e878b290-43d4-4395-9274-614c5bcddb2f","title":"Autotest updated board"},"level":"info","method":"PUT","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"columns":[{"order":1,"title":"Backlog"},{"order":2,"title":"Sprint"}],"title":"Autotest board"},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"error":"Not Found","level":"error","statusCode":404}
+{"body":{"columns":[{"order":1,"title":"Backlog"},{"order":2,"title":"Sprint"}],"title":"Autotest board"},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":"c51332eb-7ab0-41f4-a382-a8ded7ccd040","columnId":null,"description":"Lorem ipsum","order":1,"title":"Task #1","userId":null},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":"c51332eb-7ab0-41f4-a382-a8ded7ccd040","columnId":null,"description":"Lorem ipsum","order":2,"title":"Task #2","userId":null},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":"c51332eb-7ab0-41f4-a382-a8ded7ccd040","columnId":null,"description":"Lorem ipsum","order":3,"title":"Task #3","userId":null},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":"c51332eb-7ab0-41f4-a382-a8ded7ccd040","columnId":null,"description":"Lorem ipsum","order":4,"title":"Task #4","userId":null},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":"c51332eb-7ab0-41f4-a382-a8ded7ccd040","columnId":null,"description":"Lorem ipsum","order":5,"title":"Task #5","userId":null},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"error":"Not Found","level":"error","statusCode":404}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"error":"Not Found","level":"error","statusCode":404}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"error":"Not Found","level":"error","statusCode":404}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"error":"Not Found","level":"error","statusCode":404}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"error":"Not Found","level":"error","statusCode":404}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"columns":[{"order":1,"title":"Backlog"},{"order":2,"title":"Sprint"}],"title":"Autotest board"},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":null,"columnId":null,"description":"Lorem ipsum","order":0,"title":"Autotest task","userId":null},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{"boardId":null,"columnId":null,"description":"Lorem ipsum","order":0,"title":"Autotest task","userId":null},"level":"info","method":"POST","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{"boardId":null,"columnId":null,"description":"Lorem ipsum","order":0,"title":"Autotest task","userId":null},"level":"info","method":"POST","query":{}}
+{"body":{"boardId":"12ae33b5-af9d-4d47-896e-f4e09f596d9f","columnId":null,"description":"Lorem ipsum","id":"9e4a3301-e13a-4850-ab53-f0370acbedca","order":0,"title":"Autotest updated task","userId":null},"level":"info","method":"PUT","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"body":{},"level":"info","method":"GET","query":{}}
+{"error":"Not Found","level":"error","statusCode":404}
+{"body":{},"level":"info","method":"DELETE","query":{}}
+{"code":"EPIPE","errno":-4047,"level":"error","statusCode":500,"syscall":"write"}

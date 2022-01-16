@@ -1,25 +1,25 @@
-import fastify, { FastifyReply, FastifyRequest } from 'fastify';
-import { logger } from './common/logger';
-import { IDone, IFastifyInstance } from './common/types';
-import boardsRoutes from './resources/boards/boards.routes';
-import tasksRoutes from './resources/tasks/tasks.routes';
-import usersRoutes from './resources/users/users.routes';
+import bodyParser from 'body-parser';
+import express from 'express';
+import cors from 'cors';
+import {
+  handleErrorMiddleware,
+  handleNotFoundMiddleware,
+  handleRequestLogMiddleware,
+} from './common/middlewares';
+import boardsRouter from './resources/boards/boards.router';
+import tasksRouter from './resources/tasks/tasks.router';
+import usersRouter from './resources/users/users.router';
 
-const app: IFastifyInstance = fastify({
-  logger,
-});
+const app = express();
 
-app.addHook(
-  'preValidation',
-  async (request: FastifyRequest, reply: FastifyReply, done: IDone) => {
-    logger.child({ body: request.body }).info({});
-    logger.child({ query: request.query }).info({});
-    done();
-  }
-);
-
-app.register(tasksRoutes);
-app.register(usersRoutes);
-app.register(boardsRoutes);
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(handleRequestLogMiddleware);
+app.use(usersRouter);
+app.use(tasksRouter);
+app.use(boardsRouter);
+app.use(handleNotFoundMiddleware);
+app.use(handleErrorMiddleware);
 
 export default app;

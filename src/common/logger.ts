@@ -1,19 +1,14 @@
-import pino, { StreamEntry } from 'pino';
-import fs from 'fs';
+import winston from 'winston';
 
-const streams = [
-  fs.createWriteStream(`${__dirname}/../../logs/logs.stream.out`),
-  {
-    level: 'error',
-    stream: fs.createWriteStream(`${__dirname}/../../logs/error.stream.out`, {
-      flags: 'a',
+export const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({
+      filename: 'error.log',
+      level: 'error',
+      dirname: 'logs',
     }),
-  },
-] as StreamEntry[];
-
-export const logger = pino(
-  {
-    level: 'info',
-  },
-  pino.multistream(streams)
-);
+    new winston.transports.File({ filename: 'all.log', dirname: 'logs' }),
+  ],
+});
