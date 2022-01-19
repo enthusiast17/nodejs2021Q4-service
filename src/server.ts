@@ -4,6 +4,7 @@ import config from './common/config';
 import app from './app';
 import { logger } from './common/logger';
 import { User } from './resources/users/users.model';
+import { Task } from './resources/tasks/tasks.model';
 
 const {
   PORT,
@@ -24,7 +25,7 @@ const {
       host: POSTGRES_HOST,
       port: POSTGRES_PORT,
       synchronize: true,
-      entities: [User],
+      entities: [User, Task],
     });
     app.listen(PORT || 4000, () => {
       const message = `App is running on http://localhost:${PORT}`;

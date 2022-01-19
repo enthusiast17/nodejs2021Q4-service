@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 interface ITaskParams {
   id?: string;
@@ -10,38 +10,28 @@ interface ITaskParams {
   columnId?: string | null;
 }
 
+@Entity('Tasks')
 class Task {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   title: string;
 
+  @Column()
   order: number;
 
+  @Column()
   description: string;
 
+  @Column({ type: 'varchar', nullable: true })
   userId: string | null;
 
+  @Column({ type: 'varchar', nullable: true })
   boardId: string | null;
 
+  @Column({ type: 'varchar', nullable: true })
   columnId: string | null;
-
-  constructor({
-    id = uuidv4(),
-    title,
-    order,
-    description,
-    userId = null,
-    boardId = null,
-    columnId = null,
-  }: ITaskParams) {
-    this.id = id;
-    this.title = title;
-    this.order = order;
-    this.description = description;
-    this.userId = userId;
-    this.boardId = boardId;
-    this.columnId = columnId;
-  }
 }
 
 export { Task, ITaskParams };
