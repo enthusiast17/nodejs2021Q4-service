@@ -1,12 +1,15 @@
+import { getConnection } from 'typeorm';
+import { BoardColumn } from '../columns/columns.model';
 import { Board, IBoardParams } from './boards.model';
-
-const boards: Board[] = [];
 
 /**
  * Returns all existing `Board`
  * @returns Promise array of `Board` object
  */
-const getAll = async (): Promise<Board[]> => boards;
+const getAll = async (): Promise<Board[]> =>
+  getConnection()
+    .getRepository(Board)
+    .find({ relations: ['columns'] });
 
 /**
  * Returns found `Board` or null
@@ -14,7 +17,9 @@ const getAll = async (): Promise<Board[]> => boards;
  * @returns Promise `Board` object or null
  */
 const getById = async (id: string): Promise<Board | null> =>
-  boards.find((board) => board.id === id) || null;
+  (await getConnection()
+    .getRepository(Board)
+    .findOne({ where: { id }, relations: ['columns'] })) || null;
 
 /**
  * Returns found `Board` or null
@@ -22,26 +27,17 @@ const getById = async (id: string): Promise<Board | null> =>
  * @returns Promise `Board` object or null
  */
 const getByTitle = async (title: string): Promise<Board | null> =>
-  boards.find((board) => board.title === title) || null;
-
-/**
- * Returns found `Board`'s index
- * @param id `Board`'s ID to find board
- * @returns Promise number
- */
-const getIndexById = async (id: string): Promise<number> =>
-  boards.findIndex((board) => board.id === id);
+  (await getConnection()
+    .getRepository(Board)
+    .findOne({ where: { title }, relations: ['columns'] })) || null;
 
 /**
  * Returns created `Board`
  * @param data `Board`'s params `IBoardParams` to save board
  * @returns Promise `Board` object
  */
-const create = async (data: IBoardParams): Promise<Board> => {
-  const board: Board = new Board(data);
-  boards.push(board);
-  return board;
-};
+const create = async (data: IBoardParams): Promise<Board> =>
+  getConnection().getRepository(Board).save(data);
 
 /**
  * Returns updated `Board`
@@ -49,13 +45,16 @@ const create = async (data: IBoardParams): Promise<Board> => {
  * @param data `Board`'s params `IBoardParams` to update board
  * @returns Promise `Board` object
  */
-const updateById = async (id: string, data: IBoardParams) => {
-  const boardIndex: number = await getIndexById(id);
-  boards[boardIndex] = new Board({
-    ...data,
-    id,
-  });
-  return boards[boardIndex];
+const updateById = async (id: string, data: IBoardParams): Promise<Board> => {
+  await Promise.all(
+    data.columns.map(async (column) =>
+      getConnection().getRepository(BoardColumn).save(column)
+    )
+  );
+
+  return getConnection()
+    .getRepository(Board)
+    .save({ ...data, id });
 };
 
 /**
@@ -64,8 +63,7 @@ const updateById = async (id: string, data: IBoardParams) => {
  * @return Promise void
  */
 const deleteById = async (id: string) => {
-  const boardIndex = await getIndexById(id);
-  boards.splice(boardIndex);
+  await getConnection().getRepository(Board).delete({ id });
 };
 
 export default { getAll, getById, getByTitle, create, updateById, deleteById };

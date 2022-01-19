@@ -56,7 +56,7 @@ boardsRouter.put(
         req.params.boardId,
         req.body
       );
-      return res.status(200).json(Board.toResponse(board));
+      return res.status(200).json(board && Board.toResponse(board));
     } catch (err: unknown) {
       next(err);
     }

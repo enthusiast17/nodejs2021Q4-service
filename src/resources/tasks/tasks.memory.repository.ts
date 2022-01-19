@@ -52,30 +52,10 @@ const deleteById = async (boardId: string, taskId: string) => {
   await getConnection().getRepository(Task).delete({ id: taskId, boardId });
 };
 
-/**
- * Returns void and delete tasks from database
- * @param boardId `Board`'s ID to find tasks with board id
- * @return Promise void
- */
-const whenBoardDeleted = async (boardId: string) => {
-  await getConnection().getRepository(Task).delete({ boardId });
-};
-
-/**
- * Returns void and assigns tasks userId to null
- * @param userId `User`'s ID to find tasks with user id
- * @return Promise void
- */
-const whenUserDeleted = async (userId: string) => {
-  await getConnection().getRepository(Task).delete({ userId });
-};
-
 export default {
   getAll,
   getById,
   create,
   updateById,
   deleteById,
-  whenBoardDeleted,
-  whenUserDeleted,
 };
