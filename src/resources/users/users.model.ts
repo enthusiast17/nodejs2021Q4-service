@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 export interface IUserParams {
   id?: string;
@@ -7,21 +7,19 @@ export interface IUserParams {
   password: string;
 }
 
+@Entity('Users')
 class User {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   name: string;
 
+  @Column()
   login: string;
 
+  @Column()
   password: string;
-
-  constructor({ id = uuidv4(), name, login, password }: IUserParams) {
-    this.id = id;
-    this.name = name;
-    this.login = login;
-    this.password = password;
-  }
 
   /**
    * Returns `User` without password object

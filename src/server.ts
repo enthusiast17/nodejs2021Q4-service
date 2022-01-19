@@ -3,6 +3,7 @@ import { createConnection } from 'typeorm';
 import config from './common/config';
 import app from './app';
 import { logger } from './common/logger';
+import { User } from './resources/users/users.model';
 
 const {
   PORT,
@@ -22,6 +23,8 @@ const {
       type: 'postgres',
       host: POSTGRES_HOST,
       port: POSTGRES_PORT,
+      synchronize: true,
+      entities: [User],
     });
     app.listen(PORT || 4000, () => {
       const message = `App is running on http://localhost:${PORT}`;
