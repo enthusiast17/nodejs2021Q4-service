@@ -43,7 +43,9 @@ export const handleAuthMiddleware = async (
   next: NextFunction
 ) => {
   try {
-    verify(req.headers.authorization || '', config.JWT_SECRET_KEY as string);
+    const auth = req.headers.authorization?.split(' ') || [];
+    const token = auth[1] || '';
+    verify(token, config.JWT_SECRET_KEY as string);
     next();
   } catch (err: unknown) {
     next(new HttpError(...UNAUTHORIZED_ARGS, ''));
