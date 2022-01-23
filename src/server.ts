@@ -1,34 +1,17 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import config from './common/config';
-import app from './app';
 import { logger } from './common/logger';
-import { User } from './resources/users/users.model';
-import { Task } from './resources/tasks/tasks.model';
-import { BoardColumn } from './resources/columns/columns.model';
-import { Board } from './resources/boards/boards.model';
+import { handleUserPreSave } from './common/pre-saves';
+import config from './common/config';
+import ormconfig from './database/ormconfig';
+import app from './app';
 
-const {
-  PORT,
-  POSTGRES_HOST,
-  POSTGRES_PORT,
-  POSTGRES_DB,
-  POSTGRES_PASSWORD,
-  POSTGRES_USER,
-} = config;
+const { PORT } = config;
 
 (async () => {
   try {
-    await createConnection({
-      database: POSTGRES_DB,
-      username: POSTGRES_USER,
-      password: POSTGRES_PASSWORD,
-      type: 'postgres',
-      host: POSTGRES_HOST,
-      port: POSTGRES_PORT,
-      synchronize: true,
-      entities: [User, Task, BoardColumn, Board],
-    });
+    await createConnection(ormconfig);
+    await handleUserPreSave();
     app.listen(PORT || 4000, () => {
       const message = `App is running on http://localhost:${PORT}`;
       logger.log('info', message);
