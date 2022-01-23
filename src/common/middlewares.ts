@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { NOT_FOUND_ARGS } from './constants';
+import { verify } from 'jsonwebtoken';
+import config from './config';
+import { NOT_FOUND_ARGS, UNAUTHORIZED_ARGS } from './constants';
 import { HttpError } from './error';
 import { logger } from './logger';
 
@@ -33,4 +35,17 @@ export const handleNotFoundMiddleware = async (
   next: NextFunction
 ) => {
   next(new HttpError(...NOT_FOUND_ARGS, ''));
+};
+
+export const handleAuthMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    verify(req.headers.authorization || '', config.JWT_SECRET_KEY as string);
+    next();
+  } catch (err: unknown) {
+    next(new HttpError(...UNAUTHORIZED_ARGS, ''));
+  }
 };
