@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 
-export const toUserResponse = ({
+export const toUserWithoutPassword = ({
   id,
   name,
   login,

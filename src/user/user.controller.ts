@@ -12,7 +12,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { toUserResponse } from 'src/common/responses';
+import { toUserWithoutPassword } from 'src/common/utils';
 
 @Controller('users')
 export class UserController {
@@ -20,22 +20,24 @@ export class UserController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    return toUserResponse(await this.userService.create(createUserDto));
+    return toUserWithoutPassword(await this.userService.create(createUserDto));
   }
 
   @Get()
   async findAl() {
-    return (await this.userService.findAll()).map(toUserResponse);
+    return (await this.userService.findAll()).map(toUserWithoutPassword);
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return toUserResponse(await this.userService.findById(id));
+    return toUserWithoutPassword(await this.userService.findById(id));
   }
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return toUserResponse(await this.userService.update(id, updateUserDto));
+    return toUserWithoutPassword(
+      await this.userService.update(id, updateUserDto),
+    );
   }
 
   @Delete(':id')
