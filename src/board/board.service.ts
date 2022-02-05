@@ -19,7 +19,11 @@ export class BoardService {
         },
       },
       include: {
-        columns: true,
+        columns: {
+          orderBy: {
+            order: 'asc',
+          },
+        },
       },
     });
   }
@@ -35,14 +39,20 @@ export class BoardService {
   async findById(id: string): Promise<Board | null> {
     return this.prisma.board.findUnique({
       where: { id },
-      include: { columns: true },
+      include: {
+        columns: {
+          orderBy: {
+            order: 'asc',
+          },
+        },
+      },
     });
   }
 
   async update(id: string, updateBoardDto: UpdateBoardDto): Promise<Board> {
     return this.prisma.$transaction(async (prisma) => {
       await Promise.all(
-        updateBoardDto.columns.reverse().map(async (column) =>
+        updateBoardDto.columns.map(async (column) =>
           this.prisma.boardColumn.update({
             data: column,
             where: {
@@ -56,7 +66,11 @@ export class BoardService {
           title: updateBoardDto.title,
         },
         include: {
-          columns: true,
+          columns: {
+            orderBy: {
+              order: 'asc',
+            },
+          },
         },
         where: { id },
       });
