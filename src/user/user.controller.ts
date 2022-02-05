@@ -8,6 +8,7 @@ import {
   HttpStatus,
   Put,
   HttpCode,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,17 +25,28 @@ export class UserController {
   }
 
   @Get()
-  async findAl() {
-    return (await this.userService.findAll()).map(toUserWithoutPassword);
+  async findAll() {
+    const users = await this.userService.findAll();
+    if (users && users.length === 0) {
+      throw new NotFoundException();
+    }
+    return users.map(toUserWithoutPassword);
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return toUserWithoutPassword(await this.userService.findById(id));
+    const user = await this.userService.findById(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return toUserWithoutPassword(user);
   }
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    if (!(await this.userService.findById(id))) {
+      throw new NotFoundException();
+    }
     return toUserWithoutPassword(
       await this.userService.update(id, updateUserDto),
     );
@@ -43,6 +55,9 @@ export class UserController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {
+    if (!(await this.userService.findById(id))) {
+      throw new NotFoundException();
+    }
     return await this.userService.remove(id);
   }
 }

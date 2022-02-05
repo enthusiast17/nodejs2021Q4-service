@@ -42,7 +42,7 @@ export class BoardService {
   async update(id: string, updateBoardDto: UpdateBoardDto): Promise<Board> {
     return this.prisma.$transaction(async (prisma) => {
       await Promise.all(
-        updateBoardDto.columns.map(async (column) =>
+        updateBoardDto.columns.reverse().map(async (column) =>
           this.prisma.boardColumn.update({
             data: column,
             where: {
