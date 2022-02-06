@@ -10,7 +10,6 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  console.log(config);
   await app.listen(config.PORT);
 }
 bootstrap();
