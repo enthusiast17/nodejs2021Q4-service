@@ -7,11 +7,15 @@ services:
       context: .
       dockerfile: Dockerfile.db
     environment:
-      POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT_PUBLIC: ${POSTGRES_PORT_PUBLIC}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    env_file:
+      - .env.docker
     ports:
-      - ${DB_PORT}:${DB_PORT_PROD}
+      - ${POSTGRES_PORT_PUBLIC}:${POSTGRES_PORT}
     volumes:
       - /postgres:/var/lib/postgresql/data
     networks:
@@ -24,13 +28,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.app
+    env_file:
+      - .env.docker
     ports:
-      - ${PORT}:${PORT_PROD}
+      - ${PORT}:${PORT}
     volumes:
       - /logs:/node/logs
+    links:
+      - db
     networks:
       - net
 networks:
   net:
     name: user-bridge-net
     driver: bridge
+    external: true
