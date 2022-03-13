@@ -1,34 +1,33 @@
-import { v4 as uuidv4 } from 'uuid';
-import { Column, IColumnParams } from '../columns/columns.model';
+/* eslint-disable import/no-cycle */
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BoardColumn, IBoardColumnParams } from '../columns/columns.model';
 
 interface IBoardParams {
   id?: string;
   title: string;
-  columns: IColumnParams[];
+  columns: IBoardColumnParams[];
 }
 
+@Entity('Boards')
 class Board {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   title: string;
 
-  columns: Column[];
-
-  constructor({ id = uuidv4(), title, columns }: IBoardParams) {
-    this.id = id;
-    this.title = title;
-    this.columns = columns.map((column: IColumnParams) => new Column(column));
-  }
+  @OneToMany(() => BoardColumn, (boardColumn) => boardColumn.board, {
+    cascade: true,
+  })
+  columns: BoardColumn[];
 
   /**
    * Returns `Board` without `Column`'s ID
    * @param user `Board` to make `Board` without `Columns`'s ID
    * @return `Board` without `Column`'s ID
    */
-  static toResponse(
-    board: Board
-  ): Omit<Board, 'columns'> & { columns: Omit<Column, 'id'>[] } {
-    return { ...board, columns: board.columns.map(Column.toResponse) };
+  static toResponse(board: Board) {
+    return { ...board };
   }
 }
 

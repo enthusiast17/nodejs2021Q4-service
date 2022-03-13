@@ -1,12 +1,12 @@
+import { getConnection } from 'typeorm';
 import { IUserParams, User } from './users.model';
-
-const users: User[] = [];
 
 /**
  * Returns all existing `User`
  * @returns Promise array of User object
  */
-const getAll = async (): Promise<User[]> => users;
+const getAll = async (): Promise<User[]> =>
+  getConnection().getRepository(User).find({});
 
 /**
  * Returns found `User` or null
@@ -14,7 +14,7 @@ const getAll = async (): Promise<User[]> => users;
  * @returns Promise `User` object or null
  */
 const getById = async (id: string): Promise<User | null> =>
-  users.find((user: User) => user.id === id) || null;
+  (await getConnection().getRepository(User).findOne({ id })) ?? null;
 
 /**
  * Returns found `User` or null
@@ -22,26 +22,15 @@ const getById = async (id: string): Promise<User | null> =>
  * @returns Promise `User` object or null
  */
 const getByLogin = async (login: string): Promise<User | null> =>
-  users.find((user: User) => user.login === login) || null;
-
-/**
- * Returns found `User`'s index
- * @param id `User`'s ID to find user with index
- * @returns Promise number
- */
-const getIndexById = async (id: string): Promise<number> =>
-  users.findIndex((user: User) => user.id === id);
+  (await getConnection().getRepository(User).findOne({ login })) ?? null;
 
 /**
  * Returns created `User`
  * @param data User's params `IUserParams` to save user
  * @returns Promise `User` object
  */
-const create = async (data: IUserParams): Promise<User> => {
-  const user: User = new User(data);
-  users.push(user);
-  return user;
-};
+const create = async (data: IUserParams): Promise<User> =>
+  getConnection().getRepository(User).save(data);
 
 /**
  * Returns updated `User`
@@ -49,14 +38,10 @@ const create = async (data: IUserParams): Promise<User> => {
  * @param data `User`'s params (IUserParams) to update user
  * @returns Promise `User` object
  */
-const updateById = async (id: string, data: IUserParams): Promise<User> => {
-  const userIndex: number = await getIndexById(id);
-  users[userIndex] = new User({
-    ...data,
-    id,
-  });
-  return users[userIndex];
-};
+const updateById = async (id: string, data: IUserParams): Promise<User> =>
+  getConnection()
+    .getRepository(User)
+    .save({ ...data, id });
 
 /**
  * Returns void and deletes user from database
@@ -64,8 +49,7 @@ const updateById = async (id: string, data: IUserParams): Promise<User> => {
  * @return Promise void
  */
 const deleteById = async (id: string): Promise<void> => {
-  const userIndex: number = await getIndexById(id);
-  users.splice(userIndex);
+  await getConnection().getRepository(User).delete({ id });
 };
 
 export default {

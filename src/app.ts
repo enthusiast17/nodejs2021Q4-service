@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(handleRequestLogMiddleware);
 app.use(usersRouter);
-app.use(tasksRouter);
 app.use(boardsRouter);
+app.use(tasksRouter);
 app.use(handleNotFoundMiddleware);
 app.use(handleErrorMiddleware);
 

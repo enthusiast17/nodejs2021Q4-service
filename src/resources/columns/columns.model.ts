@@ -1,33 +1,44 @@
-import { v4 as uuidv4 } from 'uuid';
+/* eslint-disable import/no-cycle */
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Board } from '../boards/boards.model';
 
-export interface IColumnParams {
+export interface IBoardColumnParams {
   id?: string;
   title: string;
-  order: string[];
+  order: number;
 }
 
-class Column {
-  private id: string;
+@Entity('BoardColumns')
+class BoardColumn {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  private title: string;
+  @ManyToOne(() => Board, (board) => board.columns, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  board: Board;
 
-  private order: string[];
+  @Column({ type: 'varchar', nullable: true })
+  boardId: string | null;
 
-  constructor({ id = uuidv4(), title, order = [] }: IColumnParams) {
-    this.id = id;
-    this.title = title;
-    this.order = order;
-  }
+  @Column()
+  title: string;
+
+  @Column()
+  order: number;
 
   /**
    * Returns `Column` without id object
    * @param user `Column` to make `Column` without id
    * @return `Column` without id object
    */
-  static toResponse(column: Column): Omit<Column, 'id'> {
+  static toResponse(
+    column: BoardColumn
+  ): Omit<BoardColumn, 'id' | 'board' | 'boardId'> {
     const { title, order } = column;
     return { title, order };
   }
 }
 
-export { Column };
+export { BoardColumn };

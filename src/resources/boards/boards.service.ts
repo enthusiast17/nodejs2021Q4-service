@@ -3,7 +3,6 @@ import { NOT_FOUND_ARGS, BAD_REQUEST_ARGS } from '../../common/constants';
 import { HttpError } from '../../common/error';
 import { Board, IBoardParams } from './boards.model';
 import boardsRepository from './boards.memory.repository';
-import tasksRepository from '../tasks/tasks.memory.repository';
 
 /**
  * Returns all existing `Board` from board repository
@@ -78,7 +77,6 @@ const deleteById = async (id: string) => {
   }
 
   await boardsRepository.deleteById(id);
-  await tasksRepository.whenBoardDeleted(id);
 };
 
 export default {

@@ -7,7 +7,6 @@ import {
 } from '../../common/constants';
 import { HttpError } from '../../common/error';
 import usersRepository from './users.memory.repository';
-import tasksRepository from '../tasks/tasks.memory.repository';
 
 /**
  * Returns all existing `User` from user repository
@@ -90,7 +89,6 @@ const deleteById = async (id: string): Promise<void> => {
   }
 
   await usersRepository.deleteById(id);
-  await tasksRepository.whenUserDeleted(id);
 };
 
 export default {

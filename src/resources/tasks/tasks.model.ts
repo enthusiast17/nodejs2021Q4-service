@@ -1,4 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Board } from '../boards/boards.model';
+import { BoardColumn } from '../columns/columns.model';
+import { User } from '../users/users.model';
 
 interface ITaskParams {
   id?: string;
@@ -10,38 +13,49 @@ interface ITaskParams {
   columnId?: string | null;
 }
 
+@Entity('Tasks')
 class Task {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   title: string;
 
+  @Column()
   order: number;
 
+  @Column()
   description: string;
 
+  @ManyToOne(() => User, {
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  user: User;
+
+  @Column({ type: 'varchar', nullable: true })
   userId: string | null;
 
+  @ManyToOne(() => Board, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  board: Board;
+
+  @Column({ type: 'varchar', nullable: true })
   boardId: string | null;
 
-  columnId: string | null;
+  @ManyToOne(() => BoardColumn, {
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  column: BoardColumn;
 
-  constructor({
-    id = uuidv4(),
-    title,
-    order,
-    description,
-    userId = null,
-    boardId = null,
-    columnId = null,
-  }: ITaskParams) {
-    this.id = id;
-    this.title = title;
-    this.order = order;
-    this.description = description;
-    this.userId = userId;
-    this.boardId = boardId;
-    this.columnId = columnId;
-  }
+  @Column({ type: 'varchar', nullable: true })
+  columnId: string | null;
 }
 
 export { Task, ITaskParams };
