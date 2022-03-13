@@ -45,5 +45,6 @@
     "consistent-return": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error"
-  }
+  },
+  "ignorePatterns": ["webpack.config.js", "dist/*"]
 }

@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  db:
+    image: enthusiast17/nodejs2021q4-service_db:latest
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT_PROD}
+    volumes:
+      - /postgres:/var/lib/postgresql/data
+    networks:
+      - net
+  app:
+    image: enthusiast17/nodejs2021q4-service_app:latest
+    restart: on-failure
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - ${PORT}:${PORT_PROD}
+    volumes:
+      - /logs:/node/logs
+    networks:
+      - net
+networks:
+  net:
+    name: user-bridge-net
+    driver: bridge
