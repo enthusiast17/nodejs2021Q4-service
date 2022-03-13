@@ -1,5 +1,7 @@
 import { getConnection } from 'typeorm';
+import { hash } from 'bcrypt';
 import { IUserParams, User } from './users.model';
+import config from '../../common/config';
 
 /**
  * Returns all existing `User`
@@ -29,8 +31,12 @@ const getByLogin = async (login: string): Promise<User | null> =>
  * @param data User's params `IUserParams` to save user
  * @returns Promise `User` object
  */
-const create = async (data: IUserParams): Promise<User> =>
-  getConnection().getRepository(User).save(data);
+const create = async (data: IUserParams): Promise<User> => {
+  const hashedPassword = await hash(data.password, config.BCRYPT_SALT);
+  return getConnection()
+    .getRepository(User)
+    .save({ ...data, password: hashedPassword });
+};
 
 /**
  * Returns updated `User`
@@ -38,10 +44,12 @@ const create = async (data: IUserParams): Promise<User> =>
  * @param data `User`'s params (IUserParams) to update user
  * @returns Promise `User` object
  */
-const updateById = async (id: string, data: IUserParams): Promise<User> =>
-  getConnection()
+const updateById = async (id: string, data: IUserParams): Promise<User> => {
+  const hashedPassword = await hash(data.password, config.BCRYPT_SALT);
+  return getConnection()
     .getRepository(User)
-    .save({ ...data, id });
+    .save({ ...data, password: hashedPassword, id });
+};
 
 /**
  * Returns void and deletes user from database
